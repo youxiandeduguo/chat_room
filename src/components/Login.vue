@@ -1,0 +1,105 @@
+<template>
+  <div class="container">
+    <div class="content">
+      <h1>Welcome Xchat</h1>
+      <el-input v-model="input"   clearable class="username-input"
+      placeholder="Please input your username" />
+      <el-input
+        v-model="password" class="pwd-input"
+        placeholder="Please input password"
+        show-password
+      />
+      <div>
+        <RouterLink to="chat_page">
+          <el-button id="login-button">Login Xchat</el-button>
+        </RouterLink>
+        <div id="sign">
+          Sign Up</div>
+      </div>
+      
+    </div>
+    
+  </div>
+   
+</template>
+
+<style scoped>
+  #login-button{
+    position:relative;
+    height: 50px;
+    width: 170px;
+    top:80px;
+    border: 3px solid rgb(114, 112, 112);
+    box-shadow: 5px 7px 8px rgba(0, 0, 0, 0.6); /* 设置阴影效果 */
+    color:black;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  #login-button:hover{
+    background-color: rgb(114, 112, 112);
+    color:white;
+  }
+  .pwd-input{
+    width: 260px;
+    position: relative;
+    top: 40px;
+    left: 120px; 
+    height: 40px;
+  }
+  .username-input{
+    padding: 55;
+    width: 260px;
+    position: relative;
+    top: 20px; 
+    left: 120px; 
+    height: 40px;
+  }
+  /* .username-input:deep(.el-input__inner){
+    border-width: 9px;
+    border-color: rgb(0, 0, 0);
+  } */
+  #sign{
+    text-align: end;
+    position: relative;
+    top: 80px; 
+    margin-right: 30px;
+    color: black;
+  }
+  #sign:hover{
+    color:rgb(114, 110, 110)
+  }
+  .content{
+    text-align: center;
+    width: 40%;
+    height: 60%;
+    background-color: white;
+    /* opacity: 0.6; */
+    border-radius: 10px;
+    margin-left: 30%;
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+  }
+  .container{
+    backdrop-filter: blur(10px);
+    display: flex;
+    width: 100%;
+    height:550px;
+    background-color: black;
+  }
+</style>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({
+  name: "login",
+});
+
+</script>
+<script setup lang="ts">
+import { ref } from 'vue'
+const input = ref('')
+const password = ref('')
+
+</script>
