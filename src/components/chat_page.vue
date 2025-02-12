@@ -60,7 +60,7 @@
     .view{
         border-radius: 30px;
         width: 1430px;
-        background-color: #e1ebff77;
+        background-color: rgba(255, 255, 255, 0.6);
     }
     .menu{
         padding-top: 20px;
@@ -78,6 +78,7 @@
     }
     .menu_item .svg_content{
         border:3px solid black;
+        background-color: rgba(255, 255, 255, 0.16);
     }
     .svg_content{
         display: flex;
