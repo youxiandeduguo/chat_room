@@ -11,7 +11,7 @@
       />
       <div>
         <RouterLink to="chat_page">
-          <el-button id="login-button">Login Xchat</el-button>
+          <el-button id="login-button" >Login Xchat</el-button>
         </RouterLink>
         <div id="sign">
           Sign Up</div>
@@ -22,6 +22,35 @@
   </div>
    
 </template>
+
+
+
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  export default defineComponent({
+    name: "login",
+  });
+
+</script>
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import axios  from 'axios';
+  const input = ref('')
+  const password = ref('')
+
+  // async function login(){
+  //   try {
+  //       let {data} = await axios.get('http://127.0.0.1:8000/test/');
+  //       test.value=data
+  //       console.log(test.value)
+  //   } catch (error) {
+  //       const err = error
+  //       console.log(err)
+  //   }
+  // }
+
+</script>
+
 
 <style scoped>
   #login-button{
@@ -71,7 +100,7 @@
   .content{
     text-align: center;
     width: 40%;
-    height: 60%;
+    height: 330px;
     background-color: white;
     /* opacity: 0.6; */
     border-radius: 10px;
@@ -82,24 +111,11 @@
     /* justify-content: center; */
   }
   .container{
+
     backdrop-filter: blur(10px);
     display: flex;
     width: 100%;
-    height:550px;
+    height:800px;
     background-color: black;
   }
 </style>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: "login",
-});
-
-</script>
-<script setup lang="ts">
-import { ref } from 'vue'
-const input = ref('')
-const password = ref('')
-
-</script>

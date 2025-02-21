@@ -48,9 +48,14 @@
 #logo {
   font-size: 40px;
   font-weight: bold;
-  /* 漂亮的英文字体样式 */
+
+
+
+
+
+  /* 漂亮的英文字体样式
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  margin-left: 20px;
+  margin-left: 20px; */
 }
 </style>
 <script lang="ts">
