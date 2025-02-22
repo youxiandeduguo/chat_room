@@ -10,9 +10,7 @@
         show-password
       />
       <div>
-        <RouterLink to="chat_page">
-          <el-button id="login-button" >Login Xchat</el-button>
-        </RouterLink>
+        <el-button id="login-button" @click="login" >Login Xchat</el-button>
         <div id="sign">
           Sign Up</div>
       </div>
@@ -27,27 +25,31 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { ref } from 'vue'
+  import axios  from 'axios';
+
   export default defineComponent({
     name: "login",
   });
 
 </script>
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import axios  from 'axios';
   const input = ref('')
   const password = ref('')
-
-  // async function login(){
-  //   try {
-  //       let {data} = await axios.get('http://127.0.0.1:8000/test/');
-  //       test.value=data
-  //       console.log(test.value)
-  //   } catch (error) {
-  //       const err = error
-  //       console.log(err)
-  //   }
-  // }
+  const router=useRouter()
+  const checkinput=()=>{
+    if(!input.value.trim){
+      alert('用户名不能为空')
+      return false
+    }
+    return true
+  }
+  const login=()=>{
+    if(checkinput()){
+      router.push({ path: 'chat_page', query: { username: input.value } });
+    }
+  }
 
 </script>
 
