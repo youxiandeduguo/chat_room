@@ -8,6 +8,7 @@ import all_friend from '@/components/chat_page_child/all_friend.vue'
 import online_friend from '@/components/chat_page_child/online_friend.vue'
 import friend_request from '@/components/chat_page_child/friend_request.vue'
 import chat_message from '@/components/chat_page_child/chat_message.vue'
+import private_chat from '@/components/chat_page_child/private_chat.vue'
 const router=createRouter({
   history: createWebHistory(),
   routes:[
@@ -43,6 +44,11 @@ const router=createRouter({
               path:'all_friend',
               component:all_friend,
               name:'all_friend'
+            },
+            {
+              path:'private_chat',
+              component:private_chat,
+              name:'private_chat'
             },
             {
               path:'online_friend',

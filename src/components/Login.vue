@@ -39,7 +39,7 @@
   const password = ref('')
   const router=useRouter()
   const checkinput=()=>{
-    if(!input.value.trim){
+    if(!input.value.trim()){
       alert('用户名不能为空')
       return false
     }

@@ -1,6 +1,6 @@
 <template>
     <div>
-    <h2>Chat Room: {{ room_name }}</h2>
+    <h2 class="room_name">Chat Room: {{ room_name }}</h2>
         
     <div class="main_frame">
         <div class="user_frame">
@@ -70,7 +70,7 @@
     }
     
     let room_name='lobby'
-    let user_name=ref<string>('')
+    let user_name=ref<string>('hhc')
     let socket=ref<WebSocket | null>(null)
     let messages=ref<Message[]>([])
     let new_message=ref<string>(' ')
@@ -101,9 +101,10 @@
     const sendMessage=()=>{
         if(socket.value&&new_message.value.trim()!=''){
             const messageData={
-                sender:user_name,
+                sender:user_name.value,
                 message:new_message.value
             }
+            console.log(messageData)
             socket.value.send(JSON.stringify(messageData))
             new_message.value=""
         }
@@ -119,6 +120,9 @@
 
 
 <style scoped>
+    .room_name{
+        margin-left: 110px;
+    }
     .main_frame{
         padding-left: 50px;
         display: flex;

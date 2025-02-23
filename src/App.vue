@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <div class="router-view">
     <RouterView ></RouterView>
@@ -9,6 +6,10 @@
   
   
 </template>
+
+<script lang="ts" setup>
+  import { provide, ref } from 'vue';
+</script>
 
 <style scoped>
 .router-view{
