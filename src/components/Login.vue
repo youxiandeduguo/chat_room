@@ -28,6 +28,7 @@
   import { useRouter } from 'vue-router';
   import { ref } from 'vue'
   import axios  from 'axios';
+import { dataType } from 'element-plus/es/components/table-v2/src/common.mjs';
 
   export default defineComponent({
     name: "login",
@@ -38,16 +39,28 @@
   const input = ref('')
   const password = ref('')
   const router=useRouter()
-  const checkinput=()=>{
-    if(!input.value.trim()){
-      alert('用户名不能为空')
-      return false
+
+
+
+  async function getmessagehistory(){
+
+    try {
+        let {data,status} = await axios.get(`http://127.0.0.1:8000/serve/login?username=${input.value}`);
+        console.log(data.id)
+        return {status,data}
+
+    } catch (error) {
+        const err = error
+        console.log(err)
+        return { status: 500, data: "请求失败" };
     }
-    return true
+
   }
-  const login=()=>{
-    if(checkinput()){
-      router.push({ path: 'chat_page', query: { username: input.value } });
+
+  const login=async ()=>{
+    const {data,status}=await getmessagehistory()
+    if(status==200){
+      router.push({ path: 'chat_page', query: { username: input.value,userid:data.id } });
     }
   }
 

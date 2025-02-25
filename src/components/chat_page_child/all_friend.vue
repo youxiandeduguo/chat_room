@@ -26,12 +26,13 @@
 
     const route=useRoute();
     const username = ref('');
+    const userid = ref('');
 
 
     let friend=ref();
     async function gettest(){
         try {
-            let {data} = await axios.get('http://127.0.0.1:8000/serve/select_friend?id=111');
+            let {data} = await axios.get(`http://127.0.0.1:8000/serve/select_friend?id=${userid.value}`);
             friend.value=data
             console.log(friend.value)
         } catch (error) {
@@ -43,6 +44,7 @@
     onMounted(
         ()=>{
         username.value=route.query.username as string
+        userid.value=route.query.userid as string
         gettest()
     })
 </script>
