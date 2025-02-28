@@ -29,6 +29,7 @@
   import { ref } from 'vue'
   import axios  from 'axios';
   import { dataType } from 'element-plus/es/components/table-v2/src/common.mjs';
+  import {useUserStore} from '@/store/user'
 
   export default defineComponent({
     name: "login",
@@ -40,7 +41,7 @@
   const password = ref('')
   const router=useRouter()
 
-
+  const userStore=useUserStore()
 
   async function checklogin(){
 
@@ -60,7 +61,9 @@
   const login=async ()=>{
     const {data,status}=await checklogin()
     if(status==200){
-      router.push({ path: 'chat_page', query: { username: input.value,userid:data.id } });
+      userStore.username=input.value
+      userStore.userid=data.id
+      router.push({ path: 'chat_page', });
     }
   }
 

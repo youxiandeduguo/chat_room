@@ -1,7 +1,7 @@
 <template>
     <div class="friend_main">
         <div v-for="item in friend">
-                <RouterLink :to="{path:'/chat_page/private_message/private_chat',query:{username:username,to_name:item['name']}}">
+                <RouterLink :to="{path:'/chat_page/private_message/private_chat',query:{to_name:item['name']}}">
                     <div class="friend_frame">
                         <div class="head">{{item['name']}}</div>
                         <div class="name">{{item['name']}}</div>
@@ -23,10 +23,11 @@
     import { RouterView,RouterLink,useRoute } from 'vue-router';
     import { onMounted, ref } from 'vue';
     import axios from 'axios';
-
+    import { useUserStore } from '@/store/user';
+    const userStore=useUserStore()
     const route=useRoute();
-    const username = ref('');
-    const userid = ref('');
+    const username = ref(userStore.username);
+    const userid = ref(userStore.userid);
 
 
     let friend=ref();
@@ -43,8 +44,6 @@
     }
     onMounted(
         ()=>{
-        username.value=route.query.username as string
-        userid.value=route.query.userid as string
         gettest()
     })
 </script>

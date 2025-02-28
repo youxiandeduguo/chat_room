@@ -23,10 +23,12 @@
     import { RouterView,RouterLink,useRoute } from 'vue-router';
     import { onMounted, ref } from 'vue';
     import axios from 'axios';
+    import { useUserStore } from '@/store/user';
 
+    const userStore=useUserStore()
     const route=useRoute();
-    const username = ref('');
-    const userid = ref('');
+    const username = ref(userStore.username);
+    const userid = ref(userStore.userid);
 
 
     let friend_request=ref();

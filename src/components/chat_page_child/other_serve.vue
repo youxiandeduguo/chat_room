@@ -62,15 +62,16 @@
     import { onMounted,onBeforeMount,ref,computed } from 'vue';
     import { RouterView,RouterLink,useRoute } from 'vue-router';
     import axios from 'axios';
+    import { useUserStore } from '@/store/user';
     const route=useRoute()
 
     interface Message {
         sender: string;
         message: string;
     }
-    
+    const userStore=useUserStore()
     let room_name='lobby'
-    let user_name=ref<string>('hhc')
+    let user_name=ref<string>('')
     let socket=ref<WebSocket | null>(null)
     let messages=ref<Message[]>([])
     let new_message=ref<string>(' ')
@@ -117,8 +118,7 @@
 
 
     onMounted(()=>{
-        user_name.value=route.query.username as string
-
+        user_name.value=userStore.username
         get_group_message_history()
         socket.value=new WebSocket(`ws://127.0.0.1:8000/ws/chat/${room_name}/${user_name.value}`)
 

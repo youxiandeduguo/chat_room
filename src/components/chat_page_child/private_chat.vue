@@ -31,6 +31,7 @@
     import { RouterView,RouterLink,useRoute } from 'vue-router';
     import { onMounted,onBeforeUnmount, ref } from 'vue';
     import axios from 'axios';
+    import { useUserStore } from '@/store/user';
     export default {
         name:"private_chat"
     }
@@ -44,9 +45,10 @@
         message: string;
         time:number;
     }
+    const userStore=useUserStore()
     const route=useRoute();
     const to_name=ref('')
-    const username = ref('');
+    const username = ref(userStore.username);
     const count = ref(0)
     const load = () => {
         count.value += 2
@@ -114,7 +116,6 @@
 
     onMounted(
         ()=>{
-        username.value=route.query.username as string
         to_name.value=route.query.to_name as string
         getmessagehistory()
         
