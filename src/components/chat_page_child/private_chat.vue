@@ -136,7 +136,6 @@
 
 
 <style scoped>
-
     .head {
         width: 40px;
         height: 40px;
@@ -151,31 +150,30 @@
         flex-shrink: 0;
     }
 
-
     .sender_name {
         font-size: 14px;
         font-weight: bold;
-        color: #555;
+        color: #b0b0b0;
         margin-bottom: 4px;
     }
     .sender_name_right {
         font-size: 14px;
         font-weight: bold;
-        color: #555;
+        color: #b0b0b0;
         margin-bottom: 4px;
         text-align: right;
     }
 
     .message_text {
         font-size: 14px;
-        color: #333;
+        color: #e0e0e0;
         line-height: 1.5; 
         padding-left: 10px;
         padding-right: 10px;
         padding-top: 5px;
         padding-bottom: 5px;
         border-radius: 10px;
-        background-color: #67c23a;
+        background-color: #333333;
     }
 
     .message_item{
@@ -199,30 +197,28 @@
         max-width: 70%;
         padding: 10px 14px; 
         border-radius: 12px;
-
+        background-color: #333333;
     }
-
-    
 
     .message_frame{
-        background-color: cadetblue;
-        width: 1000px;
-        height: 513px;
+        background-color: #1e1e1e;
+        width: 100%; 
+        height: 90%; 
+        display: flex;
+        flex-direction: column;
         border-radius: 10px;
     }
-    
 
-    
     .infinite-list {
-        height: 500px;
+        flex: 1; 
         padding: 0;
         margin: 0;
         list-style: none;
-        background-color: inherit;
+        background-color: #2d2d2d;
         border-radius: 10px;
-        max-height: 800px;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #444444 #2d2d2d;
     }
     .infinite-list .infinite-list-item {
         display: flex;
@@ -235,25 +231,27 @@
     .infinite-list .infinite-list-item + .list-item {
         margin-top: 10px;
     }
-    
+
     .input_frame{
         display: flex;
         flex-direction: row;
-        gap:5px;
+        gap: 5px;
         align-items: center;
+        padding: 10px;
+        background-color: #2d2d2d; 
+        border-top: 1px solid #444444; 
     }
-    
+
     .input_box {
-        width: 840px;
+        flex: 1; 
         height: 40px;
         padding: 12px 20px; 
-        margin: 8px 0;
         box-sizing: border-box;
-        border: 2px solid #ccc;
+        border: 2px solid #444444;
         border-radius: 15px;
-        background-color: #f8f8f8; 
+        background-color: #2d2d2d; 
         font-size: 16px; 
-        color: #333;
+        color: #e0e0e0;
         outline: none; 
         transition: border-color 0.3s ease, box-shadow 0.3s ease; 
     }
@@ -272,8 +270,25 @@
         width: 150px;
         height: 40px;
         border-radius: 10px;
+        background-color: #67c23a;
+        color: #ffffff;
+        border: none;
     }
-    
 
-    
+    .input_btn:hover {
+        background-color: #5cb031;
+    }
+
+    .infinite-list::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .infinite-list::-webkit-scrollbar-track {
+        background: #2d2d2d;
+    }
+
+    .infinite-list::-webkit-scrollbar-thumb {
+        background-color: #444444;
+        border-radius: 4px;
+    }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="private_content">
         <div class="left_content">
-            <div class="user_name">用户名</div>
+            <div class="user_name">{{ username }}</div>
 
             <div class="left_line2">
                 <div>好友</div>
@@ -24,16 +24,15 @@
             </div>
             
             <div>私信</div>
-            <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
+            <ul v-infinite-scroll="load" class="infinite-list">
                 <li v-for="(message_item, index) in messages" :key="index" class="infinite-list-item">
                     <RouterLink :to="{path:'/chat_page/private_message/private_chat',query:{username:username,to_name:message_item.sender}}" class="message_item">
-                        <div class="head">{{ message_item.sender[0]}}</div>
+                        <div class="head">{{ message_item.sender[0] }}</div>
                         <div class="message_content">
                             <div class="sender_name">{{ message_item.sender }}</div>
                             <div class="message_text">{{ message_item.message }}</div>
                         </div>
                     </RouterLink>
-
                 </li>
             </ul>
 
@@ -100,152 +99,171 @@
 
 
 <style scoped>
-    .private_content{
+    .private_content {
         display: flex;
         flex-direction: row;
         color: white;
         background-color: rgba(255, 255, 255, 0.14);
         padding: 10px;
+        height: 100vh; 
     }
-    .left_content{
-        width: 20%;
-        height: 100%;
+
+    .left_content {
+        width: 300px; 
+        flex-shrink: 0;
+        height: 90%;
         display: flex;
         flex-direction: column;
         gap: 20px;
+        background-color: #1e1e1e;
+        padding: 10px; 
+        border-radius: 10px; 
     }
-    .right_content{
-        width: 50%;
+
+    .right_content {
+        flex: 1; 
         height: 100%;
-        border-left: 1px solid black;
+        border-left: 1px solid #444; 
+        background-color: #2d2d2d; 
+        border-radius: 10px; 
+        padding: 10px; 
     }
-    .left_line2{
+
+    .left_line2 {
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        gap: 180px;
-        
+        justify-content: space-between; 
+        align-items: center; 
     }
-    .user_name{
+
+    .user_name {
+        padding-left: 15px;
         font-size: 18px;
         font-weight: bold;
         color: white;
     }
-    .friend_btn{
-        padding: 2px;
+
+    .friend_btn {
+        padding: 5px 10px;
         border-radius: 7px;
         font-size: 12px;
         color: white;
         background-color: #6cbf00;
         text-decoration: none;
     }
-    .line2_btn{
+
+    .line2_btn {
         border-radius: 6px;
-        width: 80%;
+        width: 100%;
         background-color: inherit;
         font-family: 微软雅黑;
         color: #e6eaf066;
         border: none;
         height: 25px;
         text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
-    .line2_btn:hover{
+
+    .line2_btn:hover {
         background-color: #ffffff0f;
     }
-    .line2_btn_active{
+
+    .line2_btn_active {
         background-color: #ffffff0f;
         color: white;
     }
-    .btn_frame{
+
+    .btn_frame {
         display: flex;
         flex-direction: column;
         width: 100%;
         align-items: center;
         gap: 10px;
     }
+
     .head {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-color: #56f;
+        background-color: #67c23a;
         color: white;
         display: flex;
-        align-items: center; 
+        align-items: center;
         justify-content: center;
         font-size: 18px;
         font-weight: bold;
         flex-shrink: 0;
     }
 
-
     .sender_name {
         font-size: 14px;
         font-weight: bold;
-        color: #555;
+        color: #e0e0e0;
         margin-bottom: 4px;
     }
 
-
     .message_text {
-        font-size: 14px;
-        color: #333;
-        line-height: 1.5; 
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        border-radius: 10px;
-        background-color: #67c23a;
+        font-size: 12px;
+        color: #b0b0b0;
+        line-height: 1.4;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    .message_item{
+    .message_item {
         display: flex;
-        flex-direction: row;
-        background-color: inherit;
         align-items: center;
         width: 100%;
+        text-decoration: none;
+        color: inherit;
     }
 
-    .message_content{
+    .message_content {
         display: flex;
         flex-direction: column;
-        max-width: 70%;
-        padding: 10px 14px; 
-        border-radius: 12px;
-
+        margin-left: 10px;
+        flex-grow: 1;
     }
 
-    
-
-    .message_frame{
-        background-color: cadetblue;
-        width: 1000px;
-        height: 513px;
-        border-radius: 10px;
-    }
-    
-
-    
     .infinite-list {
-        height: 500px;
+        height: 100%;
+        overflow-y: auto;
         padding: 0;
         margin: 0;
         list-style: none;
         background-color: inherit;
         border-radius: 10px;
-        max-height: 800px;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        scrollbar-width: thin;
+        scrollbar-color: #67c23a #1a1a1a;
     }
-    .infinite-list .infinite-list-item {
+
+    .infinite-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .infinite-list::-webkit-scrollbar-track {
+        background: #1a1a1a;
+    }
+
+    .infinite-list::-webkit-scrollbar-thumb {
+        background-color: #67c23a;
+        border-radius: 3px;
+    }
+
+    .infinite-list-item {
         display: flex;
-        height: 80px;
-        background: var(--el-color-primary-light-9);
-        margin: 10px;
-        color: var(--el-color-primary);
-        background-color: inherit;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #2d2d2d;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
     }
-    .infinite-list .infinite-list-item + .list-item {
-        margin-top: 10px;
+
+    .infinite-list-item:hover {
+        background-color: #444;
     }
 </style>

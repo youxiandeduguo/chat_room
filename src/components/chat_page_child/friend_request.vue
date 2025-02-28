@@ -1,7 +1,7 @@
 <template>
     <div class="friend_main">
         <div v-for="item in friend_request">
-                <button @click="acceptfriendrequest(item)">
+                <button @click="acceptfriendrequest(item)" class="item_button">
                     <div class="friend_frame">
                         <div class="head">{{item}}</div>
                         <div class="name">{{item}}</div>
@@ -47,6 +47,7 @@
             const err = error
             console.log(err)
         }
+        getfriendrequest()
     }
     onMounted(
         ()=>{
@@ -64,14 +65,14 @@
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
-        width: 900px;
-        margin-bottom: 10px;
-        align-content: flex-start;
-        justify-content: space-between;
-        flex-grow: 0;
-        padding: 100px;
-        padding-top: 50px;
-        background-color: #1a1a1a; 
+        width: 100%;
+        height: 100%; 
+        padding: 50px;
+        background-color: #1a1a1a;
+        box-sizing: border-box;
+        overflow-y: auto; 
+        align-content: flex-start; 
+        margin: 0; 
     }
 
     .friend_frame {
@@ -116,5 +117,9 @@
         margin-bottom: 4px;
         background-color: transparent;
         
+    }
+    .item_button{
+        background-color: inherit;
+        border: none;
     }
 </style>
