@@ -28,7 +28,7 @@
   import { useRouter } from 'vue-router';
   import { ref } from 'vue'
   import axios  from 'axios';
-import { dataType } from 'element-plus/es/components/table-v2/src/common.mjs';
+  import { dataType } from 'element-plus/es/components/table-v2/src/common.mjs';
 
   export default defineComponent({
     name: "login",
@@ -42,7 +42,7 @@ import { dataType } from 'element-plus/es/components/table-v2/src/common.mjs';
 
 
 
-  async function getmessagehistory(){
+  async function checklogin(){
 
     try {
         let {data,status} = await axios.get(`http://127.0.0.1:8000/serve/login?username=${input.value}`);
@@ -58,7 +58,7 @@ import { dataType } from 'element-plus/es/components/table-v2/src/common.mjs';
   }
 
   const login=async ()=>{
-    const {data,status}=await getmessagehistory()
+    const {data,status}=await checklogin()
     if(status==200){
       router.push({ path: 'chat_page', query: { username: input.value,userid:data.id } });
     }

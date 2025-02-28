@@ -5,7 +5,7 @@
 
             <div class="left_line2">
                 <div>好友</div>
-                <button class="friend_btn">添加好友</button>
+                <RouterLink :to="{path:'/chat_page/private_message/add_friend',query:{username:username}}" class="friend_btn">添加好友</RouterLink>
             </div>
 
             <div class="btn_frame">
@@ -17,13 +17,26 @@
                     <svg t="1739352307372" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7915" width="10" height="10"><path d="M808.854477 375.633193c0-163.997098-134.543276-296.918433-300.536844-296.918433-165.995615 0-300.536844 132.921335-300.536844 296.918433 0 94.696756 45.01831 178.827875 114.873284 233.189993-125.261888 63.085804-213.430974 188.69357-223.198431 334.665129l44.950771 0c10.544147-136.692219 99.246375-257.717619 223.043912-305.83143 39.333844 18.691711 94.296643 34.896788 140.867308 34.896788 46.571688 0 90.499154-10.767228 129.836067-29.455869l30.833239-17.869996 24.970718-16.403598C763.838214 554.461067 808.854477 470.329948 808.854477 375.633193zM508.316609 624.184035c-138.957819 0-251.590062-111.277386-251.590062-248.570285 0-137.251967 112.632243-248.550843 251.590062-248.550843 138.957819 0 251.613598 111.298875 251.613598 248.550843C759.930207 512.904603 652.85554 624.184035 508.316609 624.184035zM762.570337 652.440589l-0.221034 0.312108c-4.907777-4.683672-11.453866-7.633864-18.779715-7.633864-15.117302 0-27.347858 5.746888-27.347858 20.863167 0 10.431583 6.037507 19.178805 14.603603 23.786753l-0.177032 0.268106c82.176604 58.731636 123.620505 147.655921 131.789559 253.452479l54.738695 0C909.319609 825.970808 850.562391 721.331609 762.570337 652.440589z" fill="currentColor" p-id="7916"></path></svg>
                     在线
                 </RouterLink>
-                <RouterLink to="/chat_page/private_message/friend_request" class="line2_btn" active-class="line2_btn_active">
+                <RouterLink :to="{path:'/chat_page/private_message/friend_request',query:{username:username}}" class="line2_btn" active-class="line2_btn_active">
                     <svg t="1739352513845" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8882" width="10" height="10"><path d="M597.333333 608.085333v89.173334A256 256 0 0 0 256 938.666667l-85.333333-0.042667a341.333333 341.333333 0 0 1 426.666666-330.581333zM512 554.666667c-141.44 0-256-114.56-256-256s114.56-256 256-256 256 114.56 256 256-114.56 256-256 256z m0-85.333334c94.293333 0 170.666667-76.373333 170.666667-170.666666s-76.373333-170.666667-170.666667-170.666667-170.666667 76.373333-170.666667 170.666667 76.373333 170.666667 170.666667 170.666666z m247.168 380.330667l150.826667-150.826667 60.373333 60.330667-211.2 211.2-150.869333-150.869333 60.373333-60.330667 90.453333 90.496z" fill="currentColor" p-id="8883"></path></svg>
                     请求
                 </RouterLink>
             </div>
             
             <div>私信</div>
+            <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
+                <li v-for="(message_item, index) in messages" :key="index" class="infinite-list-item">
+                    <RouterLink :to="{path:'/chat_page/private_message/private_chat',query:{username:username,to_name:message_item.sender}}" class="message_item">
+                        <div class="head">{{ message_item.sender[0]}}</div>
+                        <div class="message_content">
+                            <div class="sender_name">{{ message_item.sender }}</div>
+                            <div class="message_text">{{ message_item.message }}</div>
+                        </div>
+                    </RouterLink>
+
+                </li>
+            </ul>
+
 
         </div>
 
@@ -34,7 +47,8 @@
 
 <script lang="ts">
     import { onMounted,ref } from 'vue';
-    import { useRoute,RouterView,RouterLink } from 'vue-router';
+    import { useRoute,RouterView,RouterLink,useRouter } from 'vue-router';
+    import axios from 'axios';
     export default {
         name:"private_message"
     }
@@ -43,12 +57,42 @@
 
 <script setup lang="ts">
 
+    interface Message {
+            sender: string;
+            message: string;
+            time:number;
+    }
     const route=useRoute();
     const username = ref('');
     const userid = ref('');
+    const count = ref(0)
+    let messages=ref<Message[]>([])
+    const load = () => {
+        count.value += 2
+    }
+    const router=useRouter()
+
+    async function getprivateinfo(){
+
+        try {
+            let {data} = await axios.get(`http://127.0.0.1:8000/serve/get_private_info?username=${username.value}`);
+            messages.value=data
+
+            console.log(messages.value)
+        } catch (error) {
+            const err = error
+            console.log(err)
+        }
+
+    }
+
+
+
+
     onMounted(()=>{
         username.value=route.query.username as string
         userid.value=route.query.userid as string
+        getprivateinfo()
     })
 
 
@@ -88,10 +132,12 @@
         color: white;
     }
     .friend_btn{
+        padding: 2px;
         border-radius: 7px;
         font-size: 12px;
         color: white;
         background-color: #6cbf00;
+        text-decoration: none;
     }
     .line2_btn{
         border-radius: 6px;
@@ -116,5 +162,90 @@
         width: 100%;
         align-items: center;
         gap: 10px;
+    }
+    .head {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #56f;
+        color: white;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+
+    .sender_name {
+        font-size: 14px;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 4px;
+    }
+
+
+    .message_text {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.5; 
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 10px;
+        background-color: #67c23a;
+    }
+
+    .message_item{
+        display: flex;
+        flex-direction: row;
+        background-color: inherit;
+        align-items: center;
+        width: 100%;
+    }
+
+    .message_content{
+        display: flex;
+        flex-direction: column;
+        max-width: 70%;
+        padding: 10px 14px; 
+        border-radius: 12px;
+
+    }
+
+    
+
+    .message_frame{
+        background-color: cadetblue;
+        width: 1000px;
+        height: 513px;
+        border-radius: 10px;
+    }
+    
+
+    
+    .infinite-list {
+        height: 500px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        background-color: inherit;
+        border-radius: 10px;
+        max-height: 800px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .infinite-list .infinite-list-item {
+        display: flex;
+        height: 80px;
+        background: var(--el-color-primary-light-9);
+        margin: 10px;
+        color: var(--el-color-primary);
+        background-color: inherit;
+    }
+    .infinite-list .infinite-list-item + .list-item {
+        margin-top: 10px;
     }
 </style>

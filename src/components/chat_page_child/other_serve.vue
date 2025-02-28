@@ -62,6 +62,7 @@
 <script setup lang="ts">
     import { onMounted,onBeforeMount,ref,computed } from 'vue';
     import { RouterView,RouterLink,useRoute } from 'vue-router';
+    import axios from 'axios';
     const route=useRoute()
 
     interface Message {
@@ -80,9 +81,46 @@
         count.value += 2
     }
 
+
+    async function get_group_message_history(){
+
+        try {
+            let {data} = await axios.get(`http://127.0.0.1:8000/serve/get_group_history?name=${room_name}`);
+            messages.value=data
+
+            console.log(messages.value)
+        } catch (error) {
+            const err = error
+            console.log(err)
+        }
+
+    }
+
+    async function update_group_history(){
+        try {
+            let data={
+                'name':room_name,
+                'user':user_name.value,
+                'message':new_message.value,
+                'time':String(Date.now())
+            };
+            const response=await axios.post("http://127.0.0.1:8000/serve/append_group_history",data);
+            
+
+            console.log(response)
+        } catch (error) {
+            const err = error
+            console.log(err)
+        }
+    }
+
+
+
+
     onMounted(()=>{
         user_name.value=route.query.username as string
-        console.log(user_name)
+
+        get_group_message_history()
         socket.value=new WebSocket(`ws://127.0.0.1:8000/ws/chat/${room_name}/${user_name.value}`)
 
         socket.value.onmessage=(event:MessageEvent)=>{
@@ -105,6 +143,7 @@
                 message:new_message.value
             }
             console.log(messageData)
+            update_group_history()
             socket.value.send(JSON.stringify(messageData))
             new_message.value=""
         }

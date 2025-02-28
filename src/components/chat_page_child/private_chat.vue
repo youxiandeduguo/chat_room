@@ -1,24 +1,24 @@
 <template>
     <div class="message_frame">
         <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
-                    <li v-for="(message_item, index) in messages" :key="index" class="infinite-list-item">
-                        <div class="message_item" v-if="message_item.sender!=username">
-                            <div class="head">{{ message_item.sender[0]}}</div>
-                            <div class="message_content">
-                                <div class="sender_name">{{ message_item.sender }}</div>
-                                <div class="message_text">{{ message_item.message }}</div>
-                            </div>
-                        </div>
+            <li v-for="(message_item, index) in messages" :key="index" class="infinite-list-item">
+                <div class="message_item" v-if="message_item.sender!=username">
+                    <div class="head">{{ message_item.sender[0]}}</div>
+                    <div class="message_content">
+                        <div class="sender_name">{{ message_item.sender }}</div>
+                        <div class="message_text">{{ message_item.message }}</div>
+                    </div>
+                </div>
 
-                        <div class="message_item_right" v-else>
-                            <div class="message_content">
-                                <div class="sender_name_right">{{ message_item.sender }}</div>
-                                <div class="message_text">{{ message_item.message }}</div>
-                            </div>
-                            <div class="head">{{ message_item.sender[0]}}</div>
-                        </div>
-                    </li>
-                </ul>
+                <div class="message_item_right" v-else>
+                    <div class="message_content">
+                        <div class="sender_name_right">{{ message_item.sender }}</div>
+                        <div class="message_text">{{ message_item.message }}</div>
+                    </div>
+                    <div class="head">{{ message_item.sender[0]}}</div>
+                </div>
+            </li>
+        </ul>
         <div class="input_frame">
             <input class="input_box" v-model="new_message" @keyup.enter="sendMessage" placeholder="请输入聊天内容" />
             <el-button class="input_btn" type="success" @click="sendMessage">发送</el-button>
@@ -29,7 +29,7 @@
 
 <script lang="ts">
     import { RouterView,RouterLink,useRoute } from 'vue-router';
-    import { onMounted,onBeforeMount, ref } from 'vue';
+    import { onMounted,onBeforeUnmount, ref } from 'vue';
     import axios from 'axios';
     export default {
         name:"private_chat"
@@ -72,24 +72,39 @@
 
     }
 
+    async function updatehistory(){
+        try {
+            let data={
+                'sender':username.value,
+                'receiver':to_name.value,
+                'message':new_message.value,
+                'time':String(Date.now())
+            };
+            const response=await axios.post("http://127.0.0.1:8000/serve/append_history",data);
+            
+
+            console.log(response)
+        } catch (error) {
+            const err = error
+            console.log(err)
+        }
+    }
+
 
     const sendMessage=()=>{
         if(socket.value&&new_message.value.trim()!=''){
             const messageData={
                 sender:username.value,
                 message:new_message.value,
-                time:Date.now()
+                time:String(Date.now())
             }
-            console.log(messageData)
-            new_messages.value.push({sender:username.value,message:new_message.value,time:Date.now()})
+            // new_messages.value.push({sender:username.value,message:new_message.value,time:Date.now()})
+            updatehistory()
             socket.value.send(JSON.stringify(messageData))
             new_message.value=""
         }
     }
-    onBeforeMount(()=>{
-
-        
-
+    onBeforeUnmount(()=>{
         if(socket.value){
             socket.value.close()
         }
