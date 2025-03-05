@@ -12,7 +12,7 @@
                 <RouterLink to='/chat_page/other_serve' class="menu_item" active-class="menu_item_active">
                     <div class="pill"></div>
                     <div class="svg_content svg_content_group">
-                        云
+                        群
                     </div>
                 </RouterLink>
             </div>
@@ -67,20 +67,38 @@
     }
     .menu{
         padding-top: 20px;
-        gap: 20px;
+        gap: 10px; 
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 80px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 15px; 
+        padding: 10px; 
 
     }
     .menu_item{
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%; 
+        height: 50%;
+        position: relative; 
+        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: background-color 0.3s ease; 
+        border: transparent;
+        text-decoration: none;
+    }
+    .menu_item:hover {
+        background-color: rgba(255, 255, 255, 0.2); 
+    }
+    .menu_item .svg_content {
+        border: 3px solid transparent; 
+        background-color: transparent;
     }
     .menu_item .svg_content{
-        border:3px solid black;
+        border:none;
         background-color: rgba(255, 255, 255, 0.16);
     }
     .svg_content{
@@ -95,6 +113,7 @@
         background-color: inherit;
         font-size: 20px;
         font-weight: bold;
+        border:none;
     }
     .svg_content:hover{
         transform: scale(1.1);
@@ -122,7 +141,7 @@
         opacity: 1;
     }
     .menu_item_active .svg_content{
-        border:3px solid greenyellow;
+        border:none;
     }
     .menu_item_active .pill{
         opacity: 1;
@@ -131,7 +150,7 @@
         background-color: greenyellow;
         border-radius: 0 4px 4px 0;
         width: 4px;
-        height: 32px;
+        height: 300px;
         margin-top: 3px;
         position: absolute;
         left: 0;

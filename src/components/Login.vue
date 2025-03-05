@@ -63,6 +63,7 @@
     if(status==200){
       userStore.username=input.value
       userStore.userid=data.id
+      userStore.saveState();
       router.push({ path: 'chat_page', });
     }
   }
@@ -77,7 +78,7 @@
     width: 170px;
     top:80px;
     border: 3px solid rgb(114, 112, 112);
-    box-shadow: 5px 7px 8px rgba(0, 0, 0, 0.6); /* 设置阴影效果 */
+    box-shadow: 5px 7px 8px rgba(0, 0, 0, 0.6);
     color:black;
     font-weight: bold;
     font-size: 20px;
